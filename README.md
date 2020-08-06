@@ -1,5 +1,7 @@
 # swift_component_backgroundimage
 
+- imageView object를 parameter로 만들거나 global variable로 선언해야함
+
 ```swift
 
 /** Set up Image Background **/
