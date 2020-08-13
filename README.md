@@ -4,7 +4,7 @@
 
 ```swift
 
-    /** Set up Image Background **/
+      /** Set up Image Background **/
     //arg1 - hosting view
     //arg2 - network
     //arg3 - local
@@ -21,15 +21,16 @@
         if let urlString: String = urlString {
             print("\(TAG) - setUpImageBackground(): Network Image Background SetUp")
             if let url: URL = URL(string: urlString) {
-                URLSession.shared.dataTask(with: url) { (data, response, error) in
+                URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+                    guard let selfRef = self else { return }
                     if let error: Error = error {
-                        print("\(self.TAG) - setUpImageBackground: \(error)")
+                        print("\(selfRef.TAG) - setUpImageBackground: \(error)")
                         return
                     }
                     if let data = data {
                         if let image: UIImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                 self.backgroundImageView?.image = image
+                            DispatchQueue.main.async { [weak self] in
+                                 self?.backgroundImageView?.image = image
                             }
                         }
                     }
